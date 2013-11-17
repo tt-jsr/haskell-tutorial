@@ -1,3 +1,5 @@
+
+
 doubleme x = x + x
 
 doubleus x y = x*2 + y*2
@@ -26,8 +28,8 @@ capital "" = "Empty string, whoops!"
 capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]  
 
 bmiTell :: (RealFloat a) => a -> String  
-bmiTell bmi  
-    | bmi <= 18.5 = "You're underweight, you emo, you!"  
+bmiTell bmi
+    | bmi <= 18.0 = "You're a light weight"
     | bmi <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"  
     | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"  
     | otherwise   = "You're a whale, congratulations!"
@@ -61,6 +63,13 @@ maximum2 [] = error "maximum of empty list"
 maximum2 [x] = x  
 maximum2 (x:xs) = max' x (maximum2 xs)
 
+index' :: (Integral n, Ord n) => n -> [a] -> a
+index' n [] = error "Empty list"
+index' n x
+    | n < 0 = error "Negative"
+    | n >= length' x = error "Overflow"
+index' 0 x = head x
+index' n (x:xs) = index' (n-1) xs
 
 repeat' :: a -> [a]  
 repeat' x = x:repeat' x 
@@ -120,4 +129,21 @@ tellCar :: Car -> String
 tellCar (Car {make=a, model=b, year=y}) = "This " ++ a ++ " " ++ b ++ " was made in " ++ show y
 
 
-    
+--rle_ :: (Eq a) => [[a]] -> [(Int, a)]    
+--le_ [] = []
+--le_ (x:xs) = (length x, head x) : rle_ xs
+
+--le :: (Eq a) => [a] -> [(Int, a)]    
+--le x = rle_ (group x)
+
+-- Last item in a list
+last' :: [a]->a
+last' [] = error "Empty list"
+last' [x] = x
+last' (x:xs) = last' xs
+
+-- All items except the last
+init' :: [a]->[a]
+init' [] = error "Empty list"
+init' (x:y:[]) = [x]
+init' (x:xs) = x : init' xs
