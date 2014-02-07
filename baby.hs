@@ -147,3 +147,36 @@ init' :: [a]->[a]
 init' [] = error "Empty list"
 init' (x:y:[]) = [x]
 init' (x:xs) = x : init' xs
+
+--and' :: [Bool] -> Bool
+--and' True = True
+--and' (x:xs) = x : and' xs 
+
+-- Given an int and a list, return a list of items divisible
+-- by that int
+returnDivisible :: Int -> [Int] -> [Int]
+returnDivisible n xs = [x | x<-xs, (mod x n) == 0]
+
+-- From a list of lists, return a list of the last item of
+-- each list
+tails :: [[Int]]->[Int]
+tails xss = [last xs | xs <- xss]
+
+-- Declare some data types
+type Month = Int
+type Day = Int
+type Year = Int
+type Name = String
+
+data Date = Date Month Day Year
+data Anniversary = Birthday Name Date
+                | Wedding Name Name Date
+
+showDate :: Date -> String
+showDate (Date month day year) = show month ++ "/" ++ show day ++ "/" ++ show year
+
+showAnniversary :: Anniversary -> String
+showAnniversary (Wedding name1 name2 date) = 
+    name1 ++ " married to " ++ name2 ++ " on " ++ showDate date
+showAnniversary (Birthday name date) = 
+    name ++ "'s birthday is on " ++ showDate date
