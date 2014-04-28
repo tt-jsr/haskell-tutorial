@@ -1,41 +1,34 @@
 import System.Environment
+import Control.Monad.Trans.State
 
-data Foo = Foo {
-    foo_x :: Integer, 
-    foo_y :: Integer, 
-    foo_name :: String
-}
+type Person = String
 
-data Man = Man {
-    man_height :: Integer, 
-    man_weight :: Integer, 
-    man_name :: String
-}
+father:: Person -> Maybe Person 
+father f 
+    | f == "Jeff" = Just "Jack"
+    | f == "Jack" = Just "Jack D."
+    | otherwise = Nothing
 
-data Choo = Choo {
-    choo_arg1 :: Integer, 
-    choo_arg2 :: Integer
-}
+mother :: Person -> Maybe Person
+mother m
+    | m == "Jeff" = Just "Bobbie"
+    | m == "Bobbie" = Just "Cappy"
+    | otherwise = Nothing
 
-
-data Quad a b c d = First a | Second b | Third c | Fourth d
 
 main = do   
+    doIt
+
+doIt :: IO()
+
+doIt = do
     args <- getArgs
-    let x = create (if length args == 0 then "No argument" else head args)
-    putStrLn $ get x
+    let f = father "Jeff" >>= father
+    let str =  show f
+    let s = doItAgain str
+    putStrLn s
+    
+doItAgain :: String -> String
 
-create :: String -> Quad Foo Man Choo String
-create s
-    |s=="foo" = First (Foo 1 1 "position")
-    |s=="man" = Second (Man 60 180 "Jeff")
-    |s=="choo" = Third (Choo 10 20)
-    |otherwise = Fourth s
-
-get :: Quad Foo Man Choo String  -> String
-get e = case e of
-    First first -> "Have a foo: " ++ (foo_name first)
-    Second sec -> "Have a man: " ++ ( man_name sec)
-    Third third -> "Have a choo: " ++ show (choo_arg1 third) ++ "," ++ show (choo_arg2 third)
-    Fourth fourth -> "Error: " ++ fourth
+doItAgain s = "Hello " ++ s
 
