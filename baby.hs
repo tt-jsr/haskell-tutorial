@@ -23,10 +23,12 @@ length' :: (Num b) => [a] -> b
 length' [] = 0  
 length' (_:xs) = 1 + length' xs  
 
+-- @ symbol means bind to entire pattern
 capital :: String -> String  
 capital "" = "Empty string, whoops!"  
 capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]  
 
+--Guard functions
 bmiTell :: (RealFloat a) => a -> String  
 bmiTell bmi
     | bmi <= 18.0 = "You're a light weight"
@@ -90,11 +92,13 @@ divideByTen = (/10)
 applyTwice :: (a -> a) -> a -> a
 applyTwice f x = f (f x)
 
+-- a function and two arguments returns a new list
 zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
 zipWith' _ [] _ = []
 zipWith' _ _ [] = []
 zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
 
+-- where clause`
 largestDivisible :: (Integral a) => a  
 largestDivisible = head (filter p [100000,99999..])  
     where p x = x `mod` 3829 == 0 
