@@ -146,6 +146,15 @@ last' [] = error "Empty list"
 last' [x] = x
 last' (x:xs) = last' xs
 
+-- sum items in a list
+sum_' :: [Integer] -> Integer -> Integer
+sum_' [x] y = x+y
+sum_' (x:xs) y = sum_' xs y+x
+
+sum1' :: [Integer] -> Integer
+sum1' [] = error "Empty list"
+sum1' xs = sum_' xs 0
+
 -- All items except the last
 init' :: [a]->[a]
 init' [] = error "Empty list"
