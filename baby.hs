@@ -1,4 +1,6 @@
+import Data.Monoid
 
+x ^: f = f x
 
 doubleme x = x + x
 
@@ -185,6 +187,9 @@ data Date = Date Month Day Year
 data Anniversary = Birthday Name Date
                 | Wedding Name Name Date
 
+fooBirthday :: String -> [Anniversary]
+fooBirthday s = (Birthday "jeff" (Date 6 21 1959)) : []
+
 showDate :: Date -> String
 showDate (Date month day year) = show month ++ "/" ++ show day ++ "/" ++ show year
 
@@ -193,3 +198,15 @@ showAnniversary (Wedding name1 name2 date) =
     name1 ++ " married to " ++ name2 ++ " on " ++ showDate date
 showAnniversary (Birthday name date) = 
     name ++ "'s birthday is on " ++ showDate date
+
+junk' :: [String] -> String
+junk' [first] = first
+junk' xs = xs!!1
+
+newtype Any = Any {getAny :: Bool}
+    deriving (Eq, Ord, Read, Bounded)
+
+instance Monoid Main.Any where
+    mempty = Main.Any False
+    Main.Any x `mappend` Main.Any y = Main.Any (x || y)
+
